@@ -58,7 +58,7 @@ RegrLib is a **framework** – not just a library. It guides your workflow, make
 
 ### 📊 Step 5: Evaluation and Visualization
 
-- Computes metrics like **MSE, MAE, RMSE, R²**
+- Computes metrics like **MSE, R², R²adj**
 - Automatically generates:
   - **Prediction vs. actual plots**
   - **Residual plots** for error analysis
