@@ -10,7 +10,7 @@
 - 📐 Automatic polynomial degree selection
 - 🎛️ Regularization tuning (manual + grid search)
 - 🧼 Categorical encoding, feature scaling, missing value handling
-- 📊 Regression metrics: MSE, RMSE, MAE, R²
+- 📊 Regression metrics: MSE, R², R²adj
 - 📈 Visualizations: prediction plots and residual analysis
 - 🧠 Framework-style design: defines how you work, not just what you use
 
