@@ -10,7 +10,7 @@
 - 📐 Automatic polynomial degree selection
 - 🎛️ Regularization tuning (manual + grid search)
 - 🧼 Categorical encoding, feature scaling, missing value handling
-- 📊 Regression metrics: MSE, RMSE, MAE, R²
+- 📊 Regression metrics: MSE, R², R²adj
 - 📈 Visualizations: prediction plots and residual analysis
 - 🧠 Framework-style design: defines how you work, not just what you use
 
@@ -58,7 +58,7 @@ RegrLib is a **framework** – not just a library. It guides your workflow, make
 
 ### 📊 Step 5: Evaluation and Visualization
 
-- Computes metrics like **MSE, MAE, RMSE, R²**
+- Computes metrics like **MSE, R², R²adj**
 - Automatically generates:
   - **Prediction vs. actual plots**
   - **Residual plots** for error analysis
