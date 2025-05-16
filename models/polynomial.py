@@ -1,0 +1,42 @@
+import numpy as np
+from models.linear import LinearRegression
+from itertools import combinations_with_replacement
+
+class PolynomialRegression:
+    def __init__(self, degree=2, fit_intercept=True):
+        self.degree = degree
+        self.fit_intercept = fit_intercept
+        self.model = LinearRegression(fit_intercept=fit_intercept)
+        self.powers_ = None
+
+    def _polynomial_features(self, X):
+        X = np.asarray(X)
+        n_samples, n_features = X.shape
+
+        combs = list(combinations_with_replacement(range(n_features), self.degree))
+        self.powers_ = combs
+
+        X_poly = np.ones((n_samples, len(combs)))
+        for i, comb in enumerate(combs):
+            X_poly[:, i] = np.prod(X[:, comb], axis=1)
+        return X_poly
+
+    def fit(self, X, y):
+        X_poly = self._polynomial_features(X)
+        self.model.fit(X_poly, y)
+
+    def predict(self, X, alpha=0.05, returnCI = True):
+        X_poly = self._polynomial_features(X)
+        return self.model.predict(X_poly, alpha=alpha, returnCI=returnCI)
+
+    @property
+    def coef_(self):
+        return self.model.coef_
+
+    @property
+    def intercept_(self):
+        return self.model.intercept_
+
+    @property
+    def weights_(self):
+        return self.model.weights_
