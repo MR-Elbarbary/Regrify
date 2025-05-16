@@ -11,7 +11,7 @@ class LinearRegression():
         intercept_column = np.ones((X.shape[0], 1))
         return np.hstack((intercept_column, X))
 
-    def fit(self ,X , y):
+    def fit(self, X, y):
         X = np.asarray(X)
         y = np.asarray(y)
 
@@ -26,6 +26,7 @@ class LinearRegression():
         self.SSE_ = (y.T @ y) - self.weights_.T @ y
         self.n_samples_ = n = X.shape[0]
         p = self.n_parameters_
+        self.df = n-p
         self.residual_variance_ = self.SSE_ / (n - p)
         self.SST_ = yTy - n * (XTy[0])**2
         self.SSR_ = self.SST_ - self.residual_variance_
@@ -44,4 +45,13 @@ class LinearRegression():
 
         if self.fit_intercept:
             X = self._addIntercept(X)
-        return X @ self.weights_
+        yHat = X @ self.weights_
+        if not alpha:
+            return tHat
+        
+        tCrit = t.ppf(1 - alpha/2, self.df)
+        predVar = X.T @ self.XTX_inv @ X
+        sePred = np.sqrt(self.residual_variance_ * (1 + predVar))
+        upperRange = yHat + tCrit * sePred
+        lowerRange = yHat - tCrit * sePred
+        return yHat, upperRange, lowerRange
