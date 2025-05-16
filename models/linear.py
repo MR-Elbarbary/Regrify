@@ -29,7 +29,7 @@ class LinearRegression():
         self.df = n-p
         self.residual_variance_ = self.SSE_ / (n - p)
         self.SST_ = yTy - n * (XTy[0])**2
-        self.SSR_ = self.SST_ - self.residual_variance_
+        self.SSR_ = self.SST_ - self.SSE_
 
         if self.fit_intercept:
             self.intercept_ = self.weights_[0]
@@ -37,8 +37,7 @@ class LinearRegression():
         else:
             self.coef_ = self.weights_
 
-        #CI left
-    def predict(self, X, alpha=0.05):
+    def predict(self, X, alpha=0.05, returnCI=True):
         if self.coef_ is None:
             raise RuntimeError("Model has not been fitted yet. Call `fit()` before `predict()`.")
         X = np.asarray(X)
@@ -46,12 +45,11 @@ class LinearRegression():
         if self.fit_intercept:
             X = self._addIntercept(X)
         yHat = X @ self.weights_
-        if not alpha:
-            return tHat
-        
+        if not returnCI:
+            return yHat
         tCrit = t.ppf(1 - alpha/2, self.df)
         predVar = X.T @ self.XTX_inv @ X
         sePred = np.sqrt(self.residual_variance_ * (1 + predVar))
-        upperRange = yHat + tCrit * sePred
-        lowerRange = yHat - tCrit * sePred
-        return yHat, upperRange, lowerRange
+        CIUpper = yHat + tCrit * sePred
+        CILower = yHat - tCrit * sePred
+        return yHat, CILower, CIUpper
