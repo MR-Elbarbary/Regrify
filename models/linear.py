@@ -48,7 +48,7 @@ class LinearRegression():
         if not returnCI:
             return yHat
         tCrit = t.ppf(1 - alpha/2, self.df)
-        predVar = X.T @ self.XTX_inv @ X
+        predVar = np.diag(X @ self.XTX_inv @ X.T)
         sePred = np.sqrt(self.residual_variance_ * (1 + predVar))
         CIUpper = yHat + tCrit * sePred
         CILower = yHat - tCrit * sePred

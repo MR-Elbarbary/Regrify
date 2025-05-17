@@ -1,12 +1,12 @@
 import numpy as np
-from models.linear import LinearRegression
+from models.ridge import RidgeRegression
 from itertools import combinations_with_replacement
 
 class PolynomialRegression:
-    def __init__(self, degree=2, fit_intercept=True):
+    def __init__(self, degree=2, fit_intercept=True, baseModel = RidgeRegression, alpha =0):
         self.degree = degree
         self.fit_intercept = fit_intercept
-        self.model = LinearRegression(fit_intercept=fit_intercept)
+        self.model = baseModel(alpha=alpha)
         self.powers_ = None
 
     def _polynomial_features(self, X):

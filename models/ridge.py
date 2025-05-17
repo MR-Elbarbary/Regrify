@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import t
 class RidgeRegression():
-    def __init__(self, alpha=1.0, fit_intercept=True):
+    def __init__(self, alpha=0, fit_intercept=True):
         self.alpha = alpha
         self.fit_intercept = fit_intercept
         self.coef_ = None
@@ -51,7 +51,7 @@ class RidgeRegression():
         if not returnCI:
             return yHat
         tCrit = t.ppf(1 - alpha/2, self.df)
-        predVar = X.T @ self.XTX_inv @ X
+        predVar = np.diag(X @ self.XTX_inv @ X.T)
         sePred = np.sqrt(self.residual_variance_ * (1 + predVar))
         CIUpper = yHat + tCrit * sePred
         CILower = yHat - tCrit * sePred
