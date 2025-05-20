@@ -30,13 +30,17 @@ class PolynomialRegression:
         return self.model.predict(X_poly, alpha=alpha, returnCI=returnCI)
 
     @property
-    def coef_(self):
-        return self.model.coef_
+    def n_samples_(self):
+        return getattr(self.model, 'n_samples_', None)
 
     @property
-    def intercept_(self):
-        return self.model.intercept_
+    def SSE_(self):
+        return getattr(self.model, 'SSE_', None)
 
     @property
-    def weights_(self):
-        return self.model.weights_
+    def SST_(self):
+        return getattr(self.model, 'SST_', None)
+
+    @property
+    def n_parameters_(self):
+        return getattr(self.model, 'n_parameters_', None)
