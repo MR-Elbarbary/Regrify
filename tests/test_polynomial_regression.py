@@ -17,7 +17,7 @@ class TestPolynomialRegression(unittest.TestCase):
         y = X.flatten() ** 2
         model = PolynomialRegression(degree=2)
         model.fit(X, y)
-        self.assertEqual(len(model.coef_), 1)
+        self.assertEqual(len(model.model.coef_), 1)
 
 if __name__ == '__main__':
     unittest.main()
