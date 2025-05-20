@@ -23,7 +23,7 @@ class LinearRegression():
         yTy = y.T @ y
         self.XTX_inv = np.linalg.pinv(XTX)
         self.weights_ = self.XTX_inv @ XTy
-        self.SSE_ = (y.T @ y) - self.weights_.T @ y
+        self.SSE_ = (yTy) - self.weights_.T @ XTy
         self.n_samples_ = n = X.shape[0]
         p = self.n_parameters_
         self.df = n-p
