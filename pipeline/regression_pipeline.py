@@ -59,21 +59,21 @@ class RegressionPipeline:
             self.model = model
         elif not linear and independent:
             params = {'alpha': self.degrees}
-            gs = CustomGridSearch(PolynomialRegression(), params, adjusted_r2_score)
+            gs = CustomGridSearch(PolynomialRegression, params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
             
         elif not independent and linear:
             # Do grid search on alpha
             params = {'alpha': self.alphas}
-            gs = CustomGridSearch(RidgeRegression(), params, adjusted_r2_score)
+            gs = CustomGridSearch(RidgeRegression, params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
         else:
             #Do grid search on degree + alpha
             params = {'alpha': self.alphas,
                       'degree': self.degrees}
-            gs = CustomGridSearch(PolynomialRegression(baseModel=RidgeRegression), params, adjusted_r2_score)
+            gs = CustomGridSearch(PolynomialRegression, params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
 
