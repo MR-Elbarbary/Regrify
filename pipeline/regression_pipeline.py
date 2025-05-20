@@ -5,7 +5,7 @@ from sklearn.compose import ColumnTransformer
 from models.linear import LinearRegression
 from models.polynomial import PolynomialRegression
 from models.ridge import RidgeRegression
-from tuning import gridSearch
+from tuning.gridSearch import CustomGridSearch
 from metrics.evaluation import adjusted_r2_score
 from scipy.stats import spearmanr, pearsonr
 
@@ -59,21 +59,21 @@ class RegressionPipeline:
             self.model = model
         elif not linear and independent:
             params = {'alpha': self.degrees}
-            gs = gridSearch(PolynomialRegression(), params, adjusted_r2_score)
+            gs = CustomGridSearch(PolynomialRegression(), params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
             
         elif not independent and linear:
             # Do grid search on alpha
             params = {'alpha': self.alphas}
-            gs = gridSearch(RidgeRegression(), params, adjusted_r2_score)
+            gs = CustomGridSearch(RidgeRegression(), params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
         else:
             #Do grid search on degree + alpha
             params = {'alpha': self.alphas,
                       'degree': self.degrees}
-            gs = gridSearch(PolynomialRegression(baseModel=RidgeRegression), params, adjusted_r2_score)
+            gs = CustomGridSearch(PolynomialRegression(baseModel=RidgeRegression), params, adjusted_r2_score)
             gs.fit(X_processed, y)
             self.model = gs
 
