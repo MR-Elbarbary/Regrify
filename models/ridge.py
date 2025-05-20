@@ -31,7 +31,8 @@ class RidgeRegression():
         p = self.n_parameters_
         self.df = n-p
         self.residual_variance_ = self.SSE_ / (n - p)
-        self.SST_ = yTy - n * (XTy[0])**2
+        yMean = np.mean(y)
+        self.SST_ = yTy - n * (yMean ** 2)
         self.SSR_ = self.SST_ - self.SSE_
 
         if self.fit_intercept:
