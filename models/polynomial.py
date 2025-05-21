@@ -27,7 +27,11 @@ class PolynomialRegression:
 
     def predict(self, X, alpha=0.05, returnCI = True):
         X_poly = self._polynomial_features(X)
-        return self.model.predict(X_poly, alpha=alpha, returnCI=returnCI)
+        if not returnCI:
+            yhat = self.model.predict(X_poly, alpha=alpha, returnCI=returnCI)
+            return yhat
+        yhat, CILower, CIUpper = self.model.predict(X_poly, alpha=alpha, returnCI=returnCI)
+        return yhat, CILower, CIUpper
 
     @property
     def n_samples_(self):
