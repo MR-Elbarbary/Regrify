@@ -48,3 +48,7 @@ class PolynomialRegression:
     @property
     def residual_variance_(self):
         return getattr(self.model, 'residual_variance_', None)
+    
+    @property
+    def SSR_(self):
+        return getattr(self.model, 'SSR_', None)
