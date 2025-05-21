@@ -48,7 +48,7 @@ class RegressionPipeline:
         for i in range(n_features):
             for j in range(i + 1, n_features):
                 _, p_value = spearmanr(X[:, i], X[:, j])
-                if p_value > independenceAlpha:
+                if p_value < independenceAlpha:
                     return False
         return True
 
