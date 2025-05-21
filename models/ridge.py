@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import t
+from statsmodels.stats.diagnostic import het_breuschpagan
 class RidgeRegression():
     def __init__(self, alpha=0, fit_intercept=True):
         self.alpha = alpha
@@ -40,10 +41,17 @@ class RidgeRegression():
             self.coef_ = self.weights_[1:]
         else:
             self.coef_ = self.weights_
+        y_hat = X @ self.weights_
+        residuals = y - y_hat
+        bp_stat, bp_pval, _, _ = het_breuschpagan(residuals, X)
+        self.heteroscedasticity_pval_ = bp_pval
+        self.is_Constant_var = bp_pval > 0.05
 
     def predict(self, X, alpha=0.05, returnCI=True):
         if self.coef_ is None:
             raise RuntimeError("Model has not been fitted yet. Call `fit()` before `predict()`.")
+        if not self.is_Constant_var:
+            print(f"Warning: Model variance may not be constant (p = {self.heteroscedasticity_pval_:.4f})")
         X = np.asarray(X)
 
         if self.fit_intercept:
