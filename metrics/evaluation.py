@@ -39,7 +39,7 @@ def partial_f_test(X_full, X_restricted, y, model_class, alpha=0.05):
 
     p_value = 1 - f.cdf(F, K_full - K_restricted, n - K_full)
     
-    return F ,p_value < alpha
+    return F ,p_value > alpha
 
 def run_partial_f_tests_by_kept_subset(X, y, model_class, alpha=0.05):
     n_features = X.shape[1]
@@ -51,11 +51,11 @@ def run_partial_f_tests_by_kept_subset(X, y, model_class, alpha=0.05):
             X_restricted = X[:, kept]
             X_full = X[:, full_indices]
 
-            F, significant = partial_f_test(X_full, X_restricted, y, model_class, alpha)
+            F, is_significant = partial_f_test(X_full, X_restricted, y, model_class, alpha)
 
             results.append({
                 'kept_features': kept,
                 'F': F,
-                'significant': significant
+                'significant': is_significant
             })
     return results
