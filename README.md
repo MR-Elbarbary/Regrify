@@ -82,7 +82,7 @@ regrlib/
 Clone this repo:
 
 ```bash
-git clone https://github.com/yourusername/regrlib.git
-cd regrlib
+git clone https://github.com/MR-Elbarbary/Regrify.git
+cd Regrify
 ```
 
