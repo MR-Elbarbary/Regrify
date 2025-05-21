@@ -44,7 +44,3 @@ class PolynomialRegression:
     @property
     def n_parameters_(self):
         return getattr(self.model, 'n_parameters_', None)
-    
-    @property
-    def residual_variance_(self):
-        return getattr(self.model.residual_variance_, 'residual_variance_', None)
